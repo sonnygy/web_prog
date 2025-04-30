@@ -33,13 +33,16 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.replit.app",
 ]
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_USE_SESSIONS = False
-CSRF_COOKIE_HTTPONLY = True
-CSRF_COOKIE_DOMAIN = ".replit.dev"
+CSRF_COOKIE_SECURE = False  # Set to False for development
+SESSION_COOKIE_SECURE = False  # Set to False for development
+CSRF_COOKIE_SAMESITE = None
+SESSION_COOKIE_SAMESITE = None
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_HTTPONLY = False
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.replit.dev",
+    "https://*.replit.app",
+]
 
 # Application definition
 

@@ -12,9 +12,9 @@ def contacts(request):
 def sign_up(request):
   return render(request, 'myapp/sign-up.html')
 
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import ensure_csrf_cookie
 
-@csrf_protect
+@ensure_csrf_cookie
 def sign_up_view(request):
     form = ApplicationForm(request.POST if request.method == 'POST' else None)
     if request.method == 'POST' and form.is_valid():
