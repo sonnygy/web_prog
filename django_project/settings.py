@@ -28,10 +28,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = [".replit.dev", ".replit.app"]
 CSRF_TRUSTED_ORIGINS = ["https://*.replit.dev", "https://*.replit.app"]
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SAMESITE = None
+SESSION_COOKIE_SAMESITE = None
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_HTTPONLY = False
 
 # Application definition
 
