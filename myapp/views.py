@@ -13,16 +13,16 @@ def sign_up(request):
   return render(request, 'myapp/sign-up.html')
 
 def sign_up_view(request):
-    form = ApplicationForm()
     if request.method == 'POST':
         form = ApplicationForm(request.POST)
         if form.is_valid():
-          form.save()
-          messages.success(request, 'Заявка отправлена!')
-          return redirect(reverse('sign-up') + '?success=1')
+            form.save()
+            messages.success(request, 'Заявка отправлена!')
+            return redirect(reverse('sign-up') + '?success=1')
+        else:
+            messages.error(request, 'Проверьте правильность заполнения формы.')
     else:
         form = ApplicationForm()
-        messages.error(request, 'Проверьте правильность заполнения формы.')
     return render(request, 'myapp/sign-up.html', {'form': form})
 def success(request):
   return render(request, 'myapp/sign-up.html')
