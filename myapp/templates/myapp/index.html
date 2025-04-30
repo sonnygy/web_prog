@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>AutoReshenie</title>
+    <link rel="icon" href="{% static 'images/mini_logo.png' %}" type="image/x-icon">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'css/index__styles.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Russo+One&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <header>
+      <div class="navigation">
+        <a href="#" class="logo"><img src="{% static 'images/logo.jpg'%}" alt="logo" width="200" height="67"></a>
+        <ul class="menu-left">
+          <li><a href="{% url 'home' %}" target="_self">Главная</a></li>
+          <li><a href="{% url 'service' %}" target="_self">Услуги</a></li>
+          <li><a href="{% url 'contacts' %}" target="_self">Контакты</a></li>
+          <li><a href="{% url 'sign-up' %}" target="_self">Записаться</a></li>
+        </ul>
+      </div>
+    </header>
+
+  <main>
+    <div class="main-info__slideshow">
+      <div class = "main-info__slides">
+        <div class="main-info__slide">
+          <img src="{% static 'images/slide1.jpg' %}" style="width:100%">
+        </div>
+        <div class="main-info__slide">
+          <img src="{% static 'images/slide2.jpg' %}" style="width:100%">
+        </div>
+        <div class="main-info__slide">
+          <img src="{% static 'images/slide3.jpg' %}" style="width:100%">
+        </div>
+      </div>
+    </div>
+    <div class="main-info">
+      <div class = "main-info__items">
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+        <div class="main-info__main">
+            <h1>Авторешение</h1>
+            <p><strong>Это надежный автосервис в городе Покров</strong> – ремонт, обслуживание, диагностика. Мы предлагаем качественный ремонт и техобслуживание автомобилей любых марок. Профессиональные мастера, современное оборудование и честные цены.</p>
+            <p>Запишитесь на ремонт или ТО прямо сейчас!</p>
+            <div class="main-info__button">
+              <button class = "botton" onclick="location.href='{% url 'sign-up' %}';">Записаться на ремонт</button>
+            </div>
+          </div>
+        <div class="main-info__about-us">
+            <h2>О нас</h2>
+            <p><strong>Мы</strong> – команда профессионалов, которая заботится о вашем автомобиле так же, как и вы. Наш автосервис оснащен современным оборудованием, а мастера проходят регулярное обучение, чтобы предоставлять услуги на высшем уровне.
+              </p>
+              <p><strong>Наши приоритеты</strong> – качество, честность и скорость. Мы всегда согласовываем работы с клиентом, объясняем необходимость ремонта и предлагаем оптимальные решения.
+              </p>
+          </div>
+        <div class="main-info__advantage">
+            <h2>Почему выбирают нас?</h2>
+            <div class="main-info__advantages">
+              <div class="main-info__advantages-item">
+                <img src="{% static 'images/professionalism.png' %}" alt="professionalism" width="35" height="35">
+                <p>Опытные мастера и современное оборудование</p>
+                <p></p>
+              </div>
+              <div class="main-info__advantages-item">
+                <img src="{% static 'images/quality.png' %}" alt="comfort" width="35" height="35" >
+                <p>Оригинальные запчасти и качественные аналоги</p>
+              </div>
+              <div class="main-info__advantages-item">
+                <img src="{% static 'images/safety.png' %}" alt="safety" width="35" height="35">
+                <p>Гарантия на запчасти и услуги</p>
+              </div>
+              <div class="main-info__advantages-item">
+                <img src="{% static 'images/price.png' %}" alt="price" width="35" height="35">
+                <p>Оптимальные решения под бюджет клиента</p>
+              </div>
+              <div class="main-info__advantages-item">
+                <img src="{% static 'images/attitude.png' %}" alt="attitude" width="35" height="35">
+                <p>Работа и связь с мастером напрямую</p>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <script src="{% static 'js/slide.js' %}" defer></script>
+  </main>
+</body>
+
+</html>

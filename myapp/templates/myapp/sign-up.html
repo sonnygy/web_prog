@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>AutoReshenie</title>
+  <link rel="icon" href="{% static 'images/mini_logo.png' %}" type="image/x-icon">
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+  <link href="{% static 'css/sign-up__styles.css' %}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Russo+One&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="navigation">
+      <a href="#" class="logo">
+        <img src="{% static 'images/logo.jpg' %}" alt="logo" width="200" height="67">
+      </a>
+      <ul class="menu-left">
+        <li><a href="{% url 'home' %}">Главная</a></li>
+        <li><a href="{% url 'service' %}">Услуги</a></li>
+        <li><a href="{% url 'contacts' %}">Контакты</a></li>
+        <li><a href="{% url 'sign-up' %}">Записаться</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <div class="main-info">
+      <div class="main-info__sign-up">
+        <h2>Записаться на ремонт</h2>
+        <p>Заполните форму ниже, и мы свяжемся с вами в ближайшее время для подтверждения записи.</p>
+
+        <div class="main-info__sign-up__form">
+          <form method="POST" novalidate>
+            {% csrf_token %}
+
+            {% for field in form %}
+              <div class="main-info__sign-up__form__item">
+                <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}: *{% endif %}</label>
+                {{ field }}
+                {% if field.errors %}
+                  <div class="error-message">
+                    {{ field.errors|striptags }}
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+
+            <div class="main-info__sign-up__form__item">
+              <button class="botton" type="submit">Отправить</button>
+            </div>
+
+            <div class="main-info__sign-up__form__item">
+              <div id="responseMessage">
+                {% if messages %}
+                  {% for message in messages %}
+                    <div class="alert">{{ message }}</div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% if form.errors or request.GET.success %}
+      <div class="modal show">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>{% if form.errors %}Ошибка отправки формы{% else %}Заявка отправлена!{% endif %}</h3>
+            <button type="button" class="close" onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body">
+            
+            {% if not form.errors %}
+              <p>Спасибо! Мы скоро с вами свяжемся.</p>
+              <img src="{% static 'images/smile.png' %}" alt="smile" width="24" height="24">
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+  </main>
+  <script>
+    function closeModal() {
+      const modal = document.querySelector('.modal');
+      if (modal) {
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

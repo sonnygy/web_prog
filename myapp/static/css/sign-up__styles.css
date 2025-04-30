@@ -1,0 +1,142 @@
+.main-info__sign-up {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 100px 100px 100px;
+
+  .main-info__sign-up__form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 50px 80px;
+    border-radius: 7px;
+    background-color: #444;
+
+    .main-info__sign-up__form__item {
+      display: flex;
+      flex-direction: row;
+      margin: 30px 30px;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}
+
+.error-message, #responseMessage{
+  font-family: "Jura", sans-serif;
+  color: #bbb;
+  margin-left: 20px;
+  font-size: 18px;
+}
+
+input,
+select,
+textarea {
+  width: 40%;
+  height: 40px;
+  padding: 12px 20px;
+  border: 2px solid #fce906;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: #fff;
+  resize: none;
+}
+
+input[type=submit] {
+  width: 100%;
+  margin-left: 0;
+
+  &:hover {
+    background-color: #fce906;
+  }
+}
+
+textarea {
+  width: 60%;
+  height: 100px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: #fff;
+  resize: none;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(#0f172a, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+  &.show {
+    display: flex;
+  }
+
+  .modal-content {
+    background: #ffffff;
+    border-radius: 0.5em;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 30em;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 1em 0;
+        position: relative;
+
+        .modal-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0em 1em 0 2em;
+          width: 100%;
+          
+          h3 {
+            color: #111827;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1em;
+          }
+
+          .close {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            width: 2.5em;
+            height: 2.5em;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #111827;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+            z-index: 1;
+
+            &:hover {
+              transform: scale(1.1);
+            }
+      }
+    }
+
+    .modal-body {
+      padding: 1em 2em;
+      border-top: 1px solid #e0e0e0;
+
+      p {
+        color: #111827;
+        font-size: 1rem;
+      }
+
+      img {
+        margin-top: 1em;
+      }
+    }
+  }
+}
+

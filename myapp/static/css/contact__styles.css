@@ -1,0 +1,38 @@
+.main-info__contact {
+  margin: 30px 100px 100px 100px;
+
+  h2 {
+    text-align: center;
+  }
+
+  .main-info__contacts {
+    display: flex;
+    flex-direction: column;
+    .main-info__media {
+      display: flex;
+      width: 100%;
+      margin: 50px 0 100px 0;
+      justify-content: center; 
+    }
+
+    iframe {
+      max-width: 100%; 
+    }
+    .main-info__contacts-item {
+      background-color: #444;
+      margin: 10px 0px 10px;
+      padding: 10px 20px;
+      border-radius: 7px;
+
+      strong {
+        color: #fff;
+      }
+    }
+  }
+}
+.main-info__map {
+  display: flex;
+  width: 100%;
+  margin: 50px 0 100px 0;
+  justify-content: center; 
+}
