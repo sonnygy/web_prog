@@ -1,7 +1,8 @@
+version: "3.9"
+
 services:
   db:
     image: postgres:15
-    container_name: postgres
     environment:
       POSTGRES_DB: mydb
       POSTGRES_USER: user
@@ -13,16 +14,13 @@ services:
 
   redis:
     image: redis:alpine
-    container_name: redis
     ports:
       - "6380:6379"
 
   application_project:
     build:
       context: ./application_project
-    container_name: application_project
-    command: >
-      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8002"
+    command: python manage.py runserver 0.0.0.0:8002
     volumes:
       - ./application_project:/app
     ports:
@@ -33,9 +31,7 @@ services:
   django_project:
     build:
       context: ./django_project
-    container_name: django_project
-    command: >
-      sh -c "python manage.py migrate && daphne -b 0.0.0.0 -p 8001 django_project.asgi:application"
+    command: daphne -b 0.0.0.0 -p 8001 django_project.asgi:application
     volumes:
       - ./django_project:/app
     ports:
