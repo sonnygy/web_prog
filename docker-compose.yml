@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  application_project:
+    build:
+      context: ./application_project
+    container_name: application_project
+    command: >
+      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8002"
+    volumes:
+      - ./application_project:/app
+    ports:
+      - "8002:8002"
+    depends_on:
+      - db
+
+  django_project:
+    build:
+      context: ./django_project
+    container_name: django_project
+    command: >
+      sh -c "python manage.py migrate && daphne -b 0.0.0.0 -p 8001 django_project.asgi:application"
+    volumes:
+      - ./django_project:/app
+    ports:
+      - "8001:8001"
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  postgres_data:
