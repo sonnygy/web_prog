@@ -1,0 +1,131 @@
+{% extends 'myapp/index.html' %}
+{% load static %}
+
+{% block head %}
+  <link href="{% static 'css/sign-up__style.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="main-info">
+  <img src="{% static 'images/sign-up.jpg' %}" alt="sign-up" class="sign-up_img">
+  <div class="sign-up">
+    <div class="sign-up_form">
+      <h2>Записаться на ремонт</h2>
+      <p class="sign-up_text">Заполните форму ниже, и мы свяжемся с вами в ближайшее время для подтверждения записи.</p>
+
+      <form id="repair-form">
+        <div class="form_item">
+          <label for="name">Имя *</label>
+          <input type="text" id="name" name="name" class="form-input" required>
+        </div>
+
+        <div class="form_item">
+          <label for="phone">Телефон *</label>
+          <input type="text" id="phone" name="phone" class="form-input" required>
+        </div>
+
+        <div class="form_item">
+          <label for="email">Почта</label>
+          <input type="email" id="email" name="email" class="form-input">
+        </div>
+
+        <div class="form_item">
+          <label for="service">Услуга *</label>
+          <select id="service" name="service" class="form-select" required>
+            <option value="diagnostics">Диагностика</option>
+            <option value="repair">Ремонт</option>
+            <option value="maintenance">ТО</option>
+            <option value="tire">Шиномонтаж</option>
+            <option value="other">Другое</option>
+          </select>
+        </div>
+
+        <div class="form_item">
+          <label for="time">Время *</label>
+          <input type="datetime-local" id="time" name="time" class="form-input" required>
+        </div>
+
+        <div class="form_item">
+          <label for="notification">Уведомление *</label>
+          <select id="notification" name="notification" class="form-select" required>
+            <option value="call">Звонок</option>
+            <option value="sms">SMS</option>
+            <option value="email">Email</option>
+          </select>
+        </div>
+
+        <div class="form_item">
+          <label for="comment">Комментарий</label>
+          <textarea id="comment" name="comment" class="form-textarea"></textarea>
+        </div>
+
+        <div class="form_item">
+          <div id="responseMessage" class="alert"></div>
+        </div>
+
+        <div class="form_item">
+          <button type="submit" class="botton">Отправить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modal-title"></h3>
+      <button type="button" class="close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+  document.getElementById("repair-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    try {
+      const response = await fetch("http://localhost:8002/api/submit/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        showModal("Заявка отправлена!", "<p>Спасибо! Мы скоро с вами свяжемся.</p><img src='{% static 'images/smile.png' %}' width='24' height='24'>");
+        form.reset();
+      } else {
+        showModal("Ошибка отправки", Object.values(result).map(err => `<p>${err}</p>`).join(""));
+      }
+    } catch (error) {
+      showModal("Ошибка", "<p>Сервер временно недоступен.</p>");
+    }
+  });
+
+  function showModal(title, body) {
+    document.getElementById("modal-title").innerHTML = title;
+    document.getElementById("modal-body").innerHTML = body;
+    document.getElementById("modal").style.display = "block";
+    document.getElementById("modal").classList.add("show");
+  }
+
+  function closeModal() {
+    const modal = document.getElementById("modal");
+    modal.style.display = "none";
+    modal.classList.remove("show");
+  }
+
+  function getCookie(name) {
+    const cookie = document.cookie.split('; ').find(row => row.startsWith(name + '='));
+    return cookie ? decodeURIComponent(cookie.split('=')[1]) : '';
+  }
+</script>
+{% endblock %}

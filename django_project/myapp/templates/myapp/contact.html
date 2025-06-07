@@ -1,0 +1,46 @@
+{% extends 'myapp/index.html' %}
+{% load static %}
+
+{% block head %}
+<link href="{% static 'css/contact__style.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="main-info">
+      <div class="contact">
+        <div>
+        <h2>Контакты</h2>
+          <div class = "info_item">
+            <img src="{% static 'images/place.png' %}">
+            <p> г. Покров, ул. Герасимова, 41</p>
+          </div>
+          <div class = "info_item">
+            <img src="{% static 'images/phone-call.png' %}">
+            <p> +7 (999) 999-99-99</p>
+          </div>
+          <div class = "info_item">
+            <img src="{% static 'images/envelope.png' %}">
+            <p> info@autoreshenie.ru</p>
+          </div>
+          <div class = "info_item">
+           <img src="{% static 'images/clock (1).png' %}">
+            <p><strong>Пн-Пт:</strong> 9:00 - 22:00</p>
+            <p><strong>Сб-Вс:</strong> 10:00 - 20:00</p>
+          </div>
+          <p>Оставьте свой отзыв о нашей компании и следите за нами в социальных сетях, чтобы не пропустить новые акции и скидки.</p>
+             <div class = "socialmedia">
+                <img src="{% static 'images/vk.png' %}">
+                <img src="{% static 'images/whatsapp (1).png' %}">
+                <img src="{% static 'images/telegram (1).png' %}">
+              </div>
+           </div>
+          <div class = "map">
+             <div id="map"></div>
+               <script src="https://api-maps.yandex.ru/2.1/?apikey=f732b36c-19e7-4e43-8592-b044cdea1d22&lang=ru_RU" type="text/javascript"></script>
+             </div>
+           </div>
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'js/map.js' %}" type="text/javascript"></script>
+{% endblock %}

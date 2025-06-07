@@ -1,0 +1,139 @@
+{% extends 'myapp/index.html' %}
+{% load static %}
+
+{% block head %}
+<link href="{% static 'css/reviews__style.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="main-info">
+  <div class="main-info__reviews">
+    <h2>Отзывы</h2>
+      <p class = "reviews-text">Мы всегда стараемся предоставлять лучший сервис для наших клиентов. Мы были бы очень признательны, если вы оставите отзыв на нашей странице, чтобы другие клиенты могли узнать о нашей работе.</p>
+
+      <div class="comments-list">
+      </div>
+
+    <button id="open-form" class="btn">Оставить отзыв</button>
+
+    <div id="comment-modal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="close-modal">&times;</span>
+        <h2>Ваш отзыв</h2>
+        <div id="form-errors"></div>
+
+        <form id="comment-form-element">
+          <label name="name">Имя:</label>
+          <input type="text" name="name" required/>
+
+          <label for="text">Комментарий:</label>
+          <textarea name="text" required></textarea>
+
+          <label for="rating">Оценка:</label>
+            <div class="star-rating">
+              <input type="radio" name="rating" id="rating-1" value="1">
+              <label for="rating-1"></label>
+
+              <input type="radio" name="rating" id="rating-2" value="2">
+              <label for="rating-2"></label>
+
+              <input type="radio" name="rating" id="rating-3" value="3">
+              <label for="rating-3"></label>
+
+              <input type="radio" name="rating" id="rating-4" value="4">
+              <label for="rating-4"></label>
+
+              <input type="radio" name="rating" id="rating-5" value="5">
+              <label for="rating-5"></label>
+            </div>
+          <button type="submit" class="btn">Отправить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const socket = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/ws/comments/');
+
+    fetch('/initial_comments/')
+      .then(res => res.json())
+      .then(data => data.forEach(comment => {   // data — массив комментариев
+          comment.created_at = new Date(comment.created_at).toLocaleString();
+          appendComment(comment);
+    }));
+
+    document.getElementById('comment-form-element')?.addEventListener('submit', e => {
+        e.preventDefault();
+        const form = e.target;
+        const ratingInput = form.querySelector('input[name="rating"]:checked');
+
+        const errors = [];
+        const name = form.name.value.trim();
+        const text = form.text.value.trim();
+        const rating = ratingInput ? parseInt(ratingInput.value) : null;
+
+        if (!name) errors.push('Укажите ваше имя');
+        if (!text) errors.push('Напишите текст отзыва');
+        if (!rating) errors.push('Пожалуйста, выберите оценку');
+
+        if (errors.length > 0) {
+            showErrors(errors);
+            return;
+        }
+
+        const payload = { name, text, rating };
+        socket.send(JSON.stringify(payload));
+        form.reset();
+        document.getElementById('comment-modal').style.display = 'none';
+        showErrors([]);
+    });
+
+    socket.onmessage = e => {
+        const data = JSON.parse(e.data);
+        if (data.type === 'new_comment') {
+            data.comment.created_at = new Date(data.comment.created_at).toLocaleString();
+            appendComment(data.comment);
+        } else if (data.type === 'validation_error') {
+            const flatErrors = Object.values(data.errors).flat().map(err => err.message || err);
+            showErrors(flatErrors);
+        }
+    };
+
+    function appendComment(comment) {
+        const div = document.createElement('div');
+        div.className = 'comment';
+        div.innerHTML = `
+            <div class="comment__info">
+                <div class="comment-name"><strong>${comment.name}</strong></div>
+                <div class="comment-date-rating">
+                    <div class="comment-date">${comment.created_at}</div>
+                    <div class="comment-rating">${'★'.repeat(comment.rating)}${'☆'.repeat(5 - comment.rating)}</div>
+                </div>
+            </div>
+            <div class="comment-text"><strong>Комментарий:</strong> ${comment.text}</div>
+        `;
+        document.querySelector('.comments-list')?.prepend(div);
+    }
+
+    function showErrors(errors) {
+        const errorBox = document.getElementById('form-errors');
+        if (errorBox) {
+            errorBox.innerHTML = errors.map(e => `<div class="error">${e}</div>`).join('');
+        }
+    }
+
+    document.getElementById('open-form')?.addEventListener('click', () => {
+        document.getElementById('comment-modal').style.display = 'block';
+    });
+
+    document.getElementById('close-modal')?.addEventListener('click', () => {
+        document.getElementById('comment-modal').style.display = 'none';
+    });
+});
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>AutoReshenie</title>
+    <link rel="icon" href="{% static 'images/mini_logo.png' %}" type="image/x-icon">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    {% block head %}
+    {% endblock %}
+  </head>
+
+  <body>
+    <header>
+      <div class = "header">
+        <a href="#" class="logo"><img src="{% static 'images/logo.jpg'%}" alt="logo"></a>
+        <ul class="header-menu">
+          <li><a href="{% url 'home' %}" target="_self">Главная</a></li>
+          <li><a href="{% url 'service' %}" target="_self">Услуги</a></li>
+          <li><a href="{% url 'contacts' %}" target="_self">Контакты</a></li>
+          <li><a href="{% url 'reviews' %}" target="_self">Отзывы</a></li>
+        </ul>
+        <div class = "header-right">
+          <img src="{% static 'images/edit.png' %}">
+          <li><a href="{% url 'sign-up' %}" target="_self">Записаться</a></li>
+        </div>
+      </div>
+    </header>
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+    <aside>
+      <div class = "aside">
+        <div class = "aside_logo">
+          <img src="{% static 'images/logo.jpg'%}" alt="logo">
+          <div class = "aside_socialmedia">
+            <img src="{% static 'images/vk (1).png'%}">
+            <img src="{% static 'images/whatsapp.png'%}">
+            <img src="{% static 'images/telegram.png'%}">
+          </div>
+        </div>
+        <div class = "aside_pages">
+          <li><a href="{% url 'home' %}" target="_self"><p>Главная</p></a></li>
+          <li><a href="{% url 'service' %}" target="_self"><p>Услуги</p></a></li>
+          <li><a href="{% url 'contacts' %}" target="_self"><p>Контакты</p></a></li>
+          <li><a href="{% url 'reviews' %}" target="_self"><p>Отзывы</p></a></li>
+          <li><a href="{% url 'sign-up' %}" target="_self"><p>Записаться</p></a></li>
+        </div>
+        <div class = "aside_contact">
+          <div class = "aside_contact_item">
+            <img src="{% static 'images/phone-call.png'%}">
+            <p>+7 (999) 999-99-99</p>
+          </div>
+          <div class = "aside_contact_item">
+            <img src="{% static 'images/place.png'%}">
+            <p>г. Покров, ул. Ленина, д. 1</p>
+          </div>
+          <div class = "aside_contact_item">
+            <img src="{% static 'images/envelope.png'%}">
+            <p> info@autoreshenie.ru</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+</body>
+
+</html>

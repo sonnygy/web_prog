@@ -1,0 +1,63 @@
+{% extends 'myapp/index.html' %}
+{% load static %}
+
+{% block head %}
+<link href="{% static 'css/index_style.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="slideshow">
+      <img src="{% static 'images/slide1.jpg' %}">
+      <img src="{% static 'images/slide2.jpg' %}">
+      <img src="{% static 'images/slide3.jpg' %}">
+</div>
+<button class="prev">&#10094;</button>
+<button class="next">&#10095;</button>
+</div>
+<div class="text">
+  <h1>Добро пожаловать в <span class="colored-word">АвтоРешение</span></h1>
+  <p><strong>Это надежный автосервис в городе Покров.</strong> Мы предлагаем качественный ремонт и техобслуживание автомобилей любых марок. Профессиональные мастера, современное оборудование и честные цены. Ваш автомобиль заслуживает лучшего ухода!</p>
+</div>
+<div class="slider-dots"></div>
+<div class = "main_info">
+  <div class = "about-us">
+    <h2>О <span class = "colored-word">сервисе</span></h2>
+    <p><strong>Мы</strong> – команда профессионалов, которая заботится о вашем автомобиле так же, как и вы. Наш автосервис оснащен современным оборудованием, а мастера проходят регулярное обучение, чтобы предоставлять услуги на высшем уровне.
+    </p>
+    <p><strong>Наши приоритеты</strong> – качество, честность и скорость. Мы всегда согласовываем работы с клиентом, объясняем необходимость ремонта и предлагаем оптимальные решения.
+    </p>
+  </div>
+  <div class = "advantages">
+    <h2>Почему выбирают нас?</h2>
+    <div class = "item">
+      <div class = "items">
+        <img src="{% static 'images/technician.png' %}" class="img">
+        <p>Квалифицированные специалисты</p>
+      </div>
+      <div class = "items">
+        <img src="{% static 'images/repair.png' %}" class="img">
+        <p>Современное оборудование</p>
+      </div>
+      <div class = "items">
+        <img src="{% static 'images/wallet.png' %}" class="img">
+        <p>Прозрачное ценообразование</p>
+      </div>
+      <div class = "items">
+        <img src="{% static 'images/vehicle.png' %}" class="img">
+        <p>100% гарантия на запчасти и услуги</p>
+      </div>
+    </div>
+
+  </div>
+  <div class = "sign-up">
+    <h2>Запишитесь на обслуживание прямо сейчас!</h2>
+    <div class = "sign-up_text">
+      <p>
+        Доверьте свой автомобиль профессионалам. Запишитесь на сервис через форму на сайте или позвоните нам по телефону: +7 (999) 999-99-99. Мы работаем, чтобы ваш автомобиль был в идеальном состоянии!
+        </p>
+        <p>АвтоРешение — ваш надежный партнер на дороге!</p>
+      <button class="button_sign-up" onclick="location.href='{% url 'sign-up' %}'">Записаться</button>
+    </div>
+  </div>
+<script src="{% static 'js/slide.js' %}" defer></script>
+{% endblock %}
