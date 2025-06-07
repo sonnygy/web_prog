@@ -1,0 +1,70 @@
+.service {
+  display: grid;
+  grid-template-columns: 6fr 1fr;
+  justify-content: center;
+  align-items: start;
+  margin: 10vh;
+  width: 80%;
+  max-width: 1200px;
+}
+
+.service .services-list {
+  list-style-type: none;
+  border-left: 2px solid #fce906;
+}
+
+.service .services-list li {
+  margin-bottom: 2em;
+}
+
+.service .services-main {
+  width: 100%;
+}
+
+.service .services-main table {
+  width: 90%;
+  border-collapse: collapse;
+  margin: 2em 0;
+  background-color: #222;
+}
+
+.service .services-main table tr td,
+.service .services-main table tr th {
+  border: 1px solid #fff;
+  padding: 0.5em;
+  text-align: left;
+}
+
+.service .services-main table tr th {
+  background-color: #333;
+}
+
+.service .services-main table tr:hover {
+  background-color: #444;
+}
+
+.video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 10vh;
+  padding: 0 20px;
+}
+
+.video iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  max-width: 1200px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+h2 {
+  margin-top: 0;
+  padding-top: 0;
+  font-size: 48px;
+  text-align: center;
+  width: 100%;
+}
