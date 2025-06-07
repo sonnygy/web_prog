@@ -11,9 +11,11 @@ services:
     ports:
       - "5433:5432"
 
-  redis:
+   redis:
     image: redis:alpine
     container_name: redis
+    ports:
+      - "6380:6379"
 
   application_project:
     build:
