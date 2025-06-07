@@ -1,14 +1,15 @@
-name: CI/CD Pipeline
+name: Django Microservices CI with Shared DB Schemas
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
-  test:
+  build-test:
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres:15
@@ -18,65 +19,44 @@ jobs:
           POSTGRES_PASSWORD: password
         ports:
           - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
       redis:
         image: redis:alpine
         ports:
           - 6379:6379
-        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
+        python-version: '3.11'
 
-    # Django Project
-    - name: Install Django dependencies
-      working-directory: ./django_project
+    - name: Build and run Docker containers
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        docker-compose -f docker-compose.yml up -d --build
 
-    - name: Run Django migrations
-      working-directory: ./django_project
-      env:
-        DATABASE_URL: postgres://user:password@localhost:5432/mydb
-      run: |
-        python manage.py migrate --noinput
+    - name: Wait for services to start
+      run: sleep 20
 
-    - name: Run Django tests
-      working-directory: ./django_project
-      env:
-        DATABASE_URL: postgres://user:password@localhost:5432/mydb
-        REDIS_URL: redis://localhost:6379/0
+    - name: Create schemas in Postgres
       run: |
-        python manage.py test
+        docker-compose exec -T db psql -U user -d mydb -c "CREATE SCHEMA IF NOT EXISTS application_project_schema;"
+        docker-compose exec -T db psql -U user -d mydb -c "CREATE SCHEMA IF NOT EXISTS django_project_schema;"
 
-    # Application Project
-    - name: Install Application dependencies
-      working-directory: ./application_project
+    - name: Run migrations and tests for application_project
       run: |
-        pip install -r requirements.txt
+        docker-compose exec application_project python manage.py migrate
+        docker-compose exec application_project python manage.py test
 
-    - name: Run Application migrations
-      working-directory: ./application_project
-      env:
-        DATABASE_URL: postgres://user:password@localhost:5432/mydb
+    - name: Run migrations and tests for django_project
       run: |
-        python manage.py migrate --noinput
-
-    - name: Run Application tests
-      working-directory: ./application_project
-      env:
-        DATABASE_URL: postgres://user:password@localhost:5432/mydb
-      run: |
-        python manage.py test
-
-    # Integration check (опционально)
-    - name: Check services communication
-      run: |
-        echo "POSTGRES_HOST=localhost" >> $GITHUB_ENV
-        echo "REDIS_HOST=localhost" >> $GITHUB_ENV
+        docker-compose exec django_project python manage.py migrate
+        docker-compose exec django_project python manage.py test
