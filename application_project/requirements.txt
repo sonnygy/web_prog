@@ -1,4 +1,8 @@
 Django>=4.2
+daphne
+channels
+channels-redis
+whitenoise
+psycopg2-binary
 django-cors-headers
 djangorestframework
-psycopg2-binary
