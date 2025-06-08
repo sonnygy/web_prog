@@ -1,4 +1,3 @@
-
 import os
 from pathlib import Path
 
@@ -8,11 +7,7 @@ SECRET_KEY = 'django-insecure-4ju2n@$f9d0c=h)_g0lbb%k9&@rf(xa$d$g$&5ri$uf)*gev^4
 
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '0bad293f-410a-4fa0-b0e3-7916ec5e2444-00-370wl78lvdow6.sisko.replit.dev',
-    '127.0.0.1',
-    'localhost',
-]
+ALLOWED_HOSTS = ['.onrender.com']
 
 INSTALLED_APPS = [
     'daphne',
