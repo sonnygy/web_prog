@@ -13,4 +13,4 @@ COPY . /app/
 
 EXPOSE 8001
 
-CMD ["daphne", "-b", "0.0.0.0", "-p", "${PORT}", "django_project.asgi:application"]
+CMD sh -c "daphne -b 0.0.0.0 -p $PORT django_project.asgi:application"
